@@ -7,6 +7,7 @@ package humbala;
  */
 
 import java.util.*;
+import java.util.regex.*;
 import twitter4j.Query;
 import twitter4j.QueryResult;
 import twitter4j.Status;
@@ -61,5 +62,19 @@ public class Bonbon {
     public QueryResult search(String keyword) throws TwitterException {
         Query query = new Query(keyword);
         return twitter.search(query);
+    }
+    
+    /* REGEX COY */
+    private static final String regex = "(?:[\\s^])(?:ja?la?n.?|di|ke|da?ri?|menuju|arah)(?: daerah| se?ki?ta?r| de?ka?t| |) (\\w*)";
+    private static final Pattern regexPattern = Pattern.compile(regex);
+    
+    public static List<String> findPattern(String text) {
+        List<String> result = new ArrayList<String>();
+        Matcher regexMatcher = regexPattern.matcher(text);
+        while (regexMatcher.find()) {
+            result.add(regexMatcher.group(1));
+        }
+        
+        return result;
     }
 }
